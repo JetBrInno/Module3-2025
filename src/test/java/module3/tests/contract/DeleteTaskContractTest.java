@@ -1,18 +1,12 @@
-package module3.lesson3;
+package module3.tests.contract;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import module3.helpers.HttpCode;
 import module3.helpers.ToDoHelper;
-import module3.lesson2.Task;
+import module3.enitites.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +30,7 @@ public class DeleteTaskContractTest {
     @Test
     public void deleteTaskCode200() throws IOException {
         // 1. Предусловие Создаем объект BUSJAVA
-        int createdTaskId = toDoHelper.createTask();
+        int createdTaskId = toDoHelper.createTask(new Task("abc", true));
 
         HttpDelete httpDelete = new HttpDelete(URL + "/" + createdTaskId);
         HttpResponse httpResponse = httpClient.execute(httpDelete);

@@ -1,6 +1,7 @@
 package module3.lesson2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import module3.enitites.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;

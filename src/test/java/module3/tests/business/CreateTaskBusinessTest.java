@@ -1,21 +1,18 @@
-package module3.lesson3;
+package module3.tests.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import module3.helpers.HttpCode;
-import module3.lesson2.Task;
+import module3.helpers.ToDoHelper;
+import module3.enitites.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,22 +21,28 @@ public class CreateTaskBusinessTest {
 
     private HttpClient httpClient;
 
+    private ToDoHelper toDoHelper;
+
+    private int createdTaskId;
+
     @BeforeEach
     public void setUp(){
-        httpClient = HttpClientBuilder.create().build();}
+        httpClient = HttpClientBuilder.create().build();
+        toDoHelper = new ToDoHelper();
+    }
+
+    @AfterEach
+    public void tearDown() throws IOException {
+        // 4. ПОСТУСЛОВИЕ - Удаление объекта
+        toDoHelper.deleteTask(createdTaskId);
+    }
 
     @Test
     public void createTaskCheckExists() throws IOException {
         // 1. Создаем объект BUSJAVA
-        HttpPost request = new HttpPost(URL);
-        String myContent = """
-                {
-                    "title": "BUSJAVA",
-                    "completed": false
-                }""";
-        StringEntity stringEntity = new StringEntity(myContent, ContentType.APPLICATION_JSON);
-        request.setEntity(stringEntity);
-        httpClient.execute(request);
+        String title = "myJavaTask";
+        Task myJavaTask = new Task(title, false);
+        createdTaskId = toDoHelper.createTask(myJavaTask);
 
         // 2. Получаем список объектов
         HttpGet httpGet = new HttpGet(URL);
@@ -50,11 +53,7 @@ public class CreateTaskBusinessTest {
         Task[] tasks = objectMapper.readValue(stringBody, Task[].class);
 
         // 3. Проверяем что BUSJAVA есть в списке
-        assertThat(tasks).anyMatch((task) -> task.getTitle().equals("BUSJAVA"));
-
-
-        // 4. ПОСТУСЛОВИЕ - Удаление объекта
-
+        assertThat(tasks).anyMatch((task) -> task.getTitle().equals(title));
     }
 
 }

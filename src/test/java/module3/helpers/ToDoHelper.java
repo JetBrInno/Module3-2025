@@ -1,9 +1,10 @@
 package module3.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import module3.lesson2.Task;
+import module3.enitites.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -22,20 +23,22 @@ public class ToDoHelper {
         this.httpClient = HttpClientBuilder.create().build();
     }
 
-    public int createTask() throws IOException {
+    public int createTask(Task task) throws IOException {
         HttpPost request = new HttpPost(URL);
-        String myContent = """
-                {
-                    "title": "DELETEJAVA",
-                    "completed": false
-                }""";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String myContent = objectMapper.writeValueAsString(task);
+
         StringEntity stringEntity = new StringEntity(myContent, ContentType.APPLICATION_JSON);
         request.setEntity(stringEntity);
         HttpResponse response = httpClient.execute(request);
 
-        ObjectMapper objectMapper = new ObjectMapper();
         String stringBody = EntityUtils.toString(response.getEntity());
-        Task task = objectMapper.readValue(stringBody, Task.class);
-        return task.getId();
+        Task createdTask = objectMapper.readValue(stringBody, Task.class);
+        return createdTask.getId();
+    }
+
+    public void deleteTask(int id) throws IOException {
+        HttpDelete httpDelete = new HttpDelete(URL + "/" + id);
+        httpClient.execute(httpDelete);
     }
 }

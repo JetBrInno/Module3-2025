@@ -1,13 +1,13 @@
-package module3.lesson3;
+package module3.tests.contract;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import module3.helpers.HttpCode;
-import module3.lesson2.Task;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,26 +15,28 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GetToDoListTest {
+public class GetToDoListWithOkHttpTest {
     private final static String URL = "https://todo-app-sky.herokuapp.com/";
 
-    private HttpClient httpClient;
+    private OkHttpClient httpClient;
 
-    private HttpGet request;
+    private Request request;
 
     @BeforeEach
     public void setUp(){
-        httpClient = HttpClientBuilder.create().build();
-        request = new HttpGet(URL);
+        httpClient = new OkHttpClient();
+        request = new Request.Builder().url(URL).get().build();
     }
 
     @Test
     public void sendGetTestCheckStatusCode() throws IOException {
-        HttpResponse response = httpClient.execute(request);
-        int statusCode = response.getStatusLine().getStatusCode();
+        Response response = httpClient.newCall(request).execute();
+        int statusCode =  response.code();
         assertThat(statusCode).isEqualTo(HttpCode.OK);
+
+        System.out.println(Arrays.toString(response.headers().getNamesAndValues$okhttp()));
+        System.out.println(response.body().string());
     }
 
     // Второй тест

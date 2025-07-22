@@ -1,8 +1,8 @@
-package module3.lesson3;
+package module3.tests.contract;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import module3.helpers.HttpCode;
-import module3.lesson2.Task;
+import module3.enitites.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +36,15 @@ public class CreateTaskContractTest {
                 }""";
         StringEntity stringEntity = new StringEntity(myContent, ContentType.APPLICATION_JSON);
         request.setEntity(stringEntity);
+
+        HttpResponse response = httpClient.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+        assertThat(statusCode).isEqualTo(HttpCode.OK);
+    }
+
+    @Test
+    public void createTaskWithoutBody() throws IOException {
+        HttpPost request = new HttpPost(URL);
 
         HttpResponse response = httpClient.execute(request);
         int statusCode = response.getStatusLine().getStatusCode();

@@ -1,4 +1,4 @@
-package module3.lesson2;
+package module3.enitites;
 
 public class Task {
     private int id;
@@ -11,6 +11,15 @@ public class Task {
         this.id = id;
         this.title = title;
         this.completed = completed;
+    }
+
+    public Task(String title, boolean completed) {
+        this.title = title;
+        this.completed = completed;
+    }
+
+    public Task(String title) {
+        this.title = title;
     }
 
     public Task() {
