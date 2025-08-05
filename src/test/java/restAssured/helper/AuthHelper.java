@@ -17,7 +17,7 @@ public class AuthHelper {
 
     public String getToken(String username, String password) {
         return given().
-                    body(new User("admin", "admin")).contentType(ContentType.JSON).
+                    body(new User(username, password)).contentType(ContentType.JSON).
                 when().
                     post("/login").jsonPath().getString("token");
     }
