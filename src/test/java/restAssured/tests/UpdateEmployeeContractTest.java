@@ -43,6 +43,6 @@ public class UpdateEmployeeContractTest {
 
         System.out.println(employee.getMessage());
         System.out.println(employee.getError());
-        System.out.println(employee.getWrong_type_fields());
+        System.out.println(employee.getWrongTypeFields());
     }
 }

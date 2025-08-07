@@ -1,5 +1,7 @@
 package restAssured.enitites;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class ValidationErrorResponse {
@@ -8,12 +10,13 @@ public class ValidationErrorResponse {
 
     private String error;
 
-    private List<String> wrong_type_fields;
+    @JsonProperty(value = "wrong_type_fields")
+    private List<String> wrongTypeFields;
 
-    public ValidationErrorResponse(String message, String error, List<String> wrong_type_fields) {
+    public ValidationErrorResponse(String message, String error, List<String> wrongTypeFields) {
         this.message = message;
         this.error = error;
-        this.wrong_type_fields = wrong_type_fields;
+        this.wrongTypeFields = wrongTypeFields;
     }
 
     public ValidationErrorResponse() {
@@ -35,11 +38,11 @@ public class ValidationErrorResponse {
         this.error = error;
     }
 
-    public List<String> getWrong_type_fields() {
-        return wrong_type_fields;
+    public List<String> getWrongTypeFields() {
+        return wrongTypeFields;
     }
 
-    public void setWrong_type_fields(List<String> wrong_type_fields) {
-        this.wrong_type_fields = wrong_type_fields;
+    public void setWrongTypeFields(List<String> wrongTypeFields) {
+        this.wrongTypeFields = wrongTypeFields;
     }
 }

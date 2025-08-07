@@ -110,9 +110,9 @@ public class CreateEmployeeRequestContractTest {
 
         List<String> misFields = response.jsonPath().getList("missing_fields");
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(misFields.get(0)).isEqualTo("name123");
-            softAssertions.assertThat(misFields.get(1)).isEqualTo("surna241241me");
-            softAssertions.assertThat(misFields.get(2)).isEqualTo("posi42141241tion");
+            softAssertions.assertThat(misFields.get(0)).isEqualTo("name");
+            softAssertions.assertThat(misFields.get(1)).isEqualTo("surname");
+            softAssertions.assertThat(misFields.get(2)).isEqualTo("position");
         });
     }
 

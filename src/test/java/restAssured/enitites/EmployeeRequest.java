@@ -23,6 +23,9 @@ public class EmployeeRequest {
         this.city = city;
     }
 
+    public EmployeeRequest() {
+    }
+
     public String getCity() {
         return city;
     }
