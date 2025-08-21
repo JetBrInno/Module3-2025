@@ -8,6 +8,9 @@ import restAssured.enitites.EmployeeRequest;
 import restAssured.enitites.EmployeeResponse;
 import restAssured.helper.AuthHelper;
 import restAssured.helper.EmployeeHelper;
+import restAssured.helper.EmployeeHelperDB;
+
+import java.sql.SQLException;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -16,20 +19,20 @@ import static org.hamcrest.Matchers.isA;
 
 public class GetEmployeeContractTest {
 
-    private EmployeeHelper employeeHelper;
+    private static EmployeeHelperDB employeeHelperDB;
 
     private int createdEmployeeId;
 
     @BeforeAll
-    public static void setUri(){
+    public static void setUri() throws SQLException {
+        employeeHelperDB = new EmployeeHelperDB();
         baseURI = "https://innopolispython.onrender.com";
     }
 
     @BeforeEach
-    public void setUp() {
-        employeeHelper = new EmployeeHelper();
+    public void setUp() throws SQLException {
         EmployeeRequest employee = new EmployeeRequest("Moscow", "Alex", "IT", "Krytoi");
-        createdEmployeeId = employeeHelper.createEmployee(employee);
+        createdEmployeeId = employeeHelperDB.createEmployee(employee);
     }
 
     @Test
