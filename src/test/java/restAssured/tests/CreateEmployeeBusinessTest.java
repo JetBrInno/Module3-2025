@@ -11,6 +11,7 @@ import restAssured.helper.AuthHelper;
 import restAssured.helper.EmployeeHelper;
 import restAssured.helper.EmployeeHelperDB;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class CreateEmployeeBusinessTest {
     private static EmployeeHelperDB employeeHelperDB;
 
     @BeforeAll
-    public static void setUri() throws SQLException {
+    public static void setUri() throws SQLException, IOException {
         baseURI = "https://innopolispython.onrender.com";
         employeeHelper = new EmployeeHelper();
         employeeHelperDB = new EmployeeHelperDB();

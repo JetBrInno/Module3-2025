@@ -3,6 +3,7 @@ package restAssured.helper;
 import restAssured.enitites.EmployeeRequest;
 import restAssured.enitites.EmployeeResponse;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import static io.restassured.RestAssured.given;
 
 public class EmployeeHelperDB extends AbstractHelper {
 
-    public EmployeeHelperDB() throws SQLException {
+    public EmployeeHelperDB() throws SQLException, IOException {
         connection = getConnection();
     }
 

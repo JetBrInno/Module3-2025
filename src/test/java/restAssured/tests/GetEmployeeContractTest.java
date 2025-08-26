@@ -10,6 +10,7 @@ import restAssured.helper.AuthHelper;
 import restAssured.helper.EmployeeHelper;
 import restAssured.helper.EmployeeHelperDB;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static io.restassured.RestAssured.baseURI;
@@ -24,7 +25,7 @@ public class GetEmployeeContractTest {
     private int createdEmployeeId;
 
     @BeforeAll
-    public static void setUri() throws SQLException {
+    public static void setUri() throws SQLException, IOException {
         employeeHelperDB = new EmployeeHelperDB();
         baseURI = "https://innopolispython.onrender.com";
     }
