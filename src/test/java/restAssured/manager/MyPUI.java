@@ -84,7 +84,7 @@ public class MyPUI implements PersistenceUnitInfo {
 
     @Override
     public Properties getProperties() {
-        return null;
+        return properties;
     }
 
     @Override

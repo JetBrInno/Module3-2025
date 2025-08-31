@@ -1,8 +1,7 @@
 package restAssured.entitiesDB;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -10,14 +9,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "employee", schema = "public", catalog = "employee_postgres")
 public class Employee {
+
+    @Column
     private String city;
 
+    @Column
     private String name;
 
+    @Column
     private String position;
 
+    @Column(name = "surname")
     private String surname;
 
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     public String getCity() {
